@@ -6,7 +6,7 @@ const gameValidation = Joi.object({
     genre:Joi.string(),
     status:Joi.string().valid("playing", "finished"),
     gameTime:Joi.number()
-})
+});
 
 export {
     gameValidation

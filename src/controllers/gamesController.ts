@@ -1,16 +1,16 @@
-import {Request, Response} from "express"
-import Joi from "joi"
+import {Request, Response} from "express";
+import { gameValidation } from "../schemas/gameSchema.js";
 
-const gameValidation = Joi.object({
-    name: Joi.string(),
-    platform:Joi.string().valid("xbox","ps","pc"),
-    genre:Joi.string(),
-    status:Joi.string().valid("playing", "finished"),
-    gameTime:Joi.number()
-})
+type Game = {
+    name: string,
+    platform:string,
+    genre:string,
+    status:string,
+    gameTime:number
+};
 
-export default async function createGame(req:Request, res:Response){
-    const game = req.body
+async function createGame(req:Request, res:Response){
+    const game : Game = req.body
 
     const {error} = gameValidation.validate(game, {abortEarly: false})
 
@@ -19,4 +19,10 @@ export default async function createGame(req:Request, res:Response){
     }
 
     res.send(game) 
-}
+};
+
+
+
+export {
+    createGame
+};
