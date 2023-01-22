@@ -1,0 +1,34 @@
+{
+  "name": "my-game-list-api",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Um organizador de games,de diferentes plataformas, já jogados ou não.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JonasTiago/my-game-list-Api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JonasTiago/my-game-list-Api/issues"
+  },
+  "homepage": "https://github.com/JonasTiago/my-game-list-Api#readme",
+  "dependencies": {
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.15",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "joi": "^17.7.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.4"
+  }
+}
