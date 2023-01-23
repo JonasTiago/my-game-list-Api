@@ -1,8 +1,10 @@
 # my-game-list-Api
-Um organizador de games, de diferentes plataformas.
-
+A game organizer, from different platforms.
+#
 
 ## How to run for development
+
+
 
 1. Clone this repository
 ```bash
@@ -13,7 +15,6 @@ cd my-game-list-Api/
 ```bash
 npm i
 ```
-
 
 3. Create a PostgreSQL database with whatever name you want
 
@@ -34,8 +35,11 @@ npm run dev
 
 
 ### POST /games
- * Adicionar um game a lista
- * Deve receber um corpo (body) no formato:
+* Add a game to the list
+* Must receive a body in the format:
+    * platforms available: "xbox","playStation" or "pc"
+    
+     * game status: "playing" or "finished"
 
     ```javaScript
         {
@@ -46,15 +50,11 @@ npm run dev
             gameTime:60
         }
     ```
- * Regras de negocios
 
-    * platform disponiveis : "xbox","playStation" ou "pc"
-    
-    * status do game: "playing" ou "finished"
 
 ### GET /games
 
-* Retorna um lista com os games ja cadastrados:
+* Returns a list of games already registered:
 
     ```javaScript
         [
@@ -81,9 +81,9 @@ npm run dev
 
 ### GET /search?search=xbox
 
-* Realiza uma pesquisa no banco, usando o valor de search.
-* A pesquisa é feita por genre ou platform
-* O resultado corresponde ao nome completo ou o inicio do nome.
+* Perform a database search, using the search value.
+* Search is done by genre or platform.
+* The result matches the full name or the beginning of the name.
 
     ```javaScript
         [
@@ -101,13 +101,12 @@ npm run dev
 
 ### DELETE /games/:id
 
-* Remove um game da lista, usando o Id
+* Remove a game from the list, using the game id
 
 ### PUT /games/:id
 
-* Atualiza o status ou e gametime
-
-* Espera o id do game, alem receber um corpo (body) no formato:
+* Updates status or and gametime
+* Expects the game id, in addition to receiving a body in the format:
 
     ```javaScript
         {
