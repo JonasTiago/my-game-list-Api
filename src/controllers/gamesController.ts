@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { string } from "joi";
 import { prismaClient } from "../database/database.js";
 import { gameValidation } from "../schemas/gameSchema.js";
 
@@ -12,7 +13,7 @@ type Game = {
     createdAt?: string
 };
 
-async function createGame(req: Request, res: Response) {
+async function createGame(req: Request, res: Response) : Promise<Response<string, Record<string, object>> | void>{
     const game: Game = req.body;
 
     const { error } = gameValidation.validate(game, { abortEarly: false })
@@ -37,7 +38,7 @@ async function createGame(req: Request, res: Response) {
         res.sendStatus(201)
 
     } catch (error) {
-        res.status(500).send(error)
+        res.status(400).send(error)
     }
 
 };
@@ -51,7 +52,7 @@ async function findGames(req: Request, res: Response) {
         res.status(200).send(games);
 
     } catch (error) {
-        res.status(500).send(error)
+        res.status(400).send(error)
     }
 
 };
@@ -63,7 +64,7 @@ async function searchGames(req: Request, res: Response) {
 
         const searchResult = await prismaClient.$queryRawUnsafe(
             `SELECT * FROM games WHERE (platform ILIKE $1 OR genre ILIKE $1);`,
-            `%${search}%`
+            `${search}%`
         );
 
         res.status(200).send(searchResult);
@@ -88,7 +89,7 @@ async function deleteGame(req: Request, res: Response) {
         res.sendStatus(200);
 
     } catch (error) {
-        res.status(500).send(error);
+        res.status(400).send(error);
     }
 
 };
@@ -98,17 +99,28 @@ type UpGame = {
     gameTime: number,
 }
 
-async function updateStatusGame(req: Request, res: Response) {
+async function updateStatusGame(req: Request, res: Response): Promise<Response<string, Record<string, object>> | void> {
     const { id } = req.params;
     const newStatusGame: UpGame = req.body;
 
     try {
+
+        const game = await prismaClient.game.findUnique({
+            where: {
+                id: Number(id)
+            }
+        })
+
+        if(!game) return res.sendStatus(404)
 
         await prismaClient.game.update({
             where: {
                 id: Number(id)
             },
             data: {
+                name: game.name,
+                platform: game.platform,
+                genre: game.genre,
                 status: newStatusGame.status,
                 gameTime: newStatusGame.gameTime,
             }
@@ -117,7 +129,7 @@ async function updateStatusGame(req: Request, res: Response) {
         res.sendStatus(200);
 
     } catch (error) {
-        res.status(500).send(error);
+        res.status(400).send(error);
     }
 
 };
