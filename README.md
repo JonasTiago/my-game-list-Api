@@ -5,6 +5,9 @@ Um organizador de games, de diferentes plataformas.
 ## How to run for development
 
 1. Clone this repository
+```bash
+cd my-game-list-Api/
+```
 2. Install all dependencies
 
 ```bash
@@ -16,24 +19,18 @@ npm i
 
 4. Configure the `.env` file using the `.env.example` file 
 
-5.
+5. Run prisma migrate
 
+```bash
+npx prisma migrate dev
+```
 6. Run the back-end in a development environment:
 
 ```bash
 npm run dev
 ```
 
-
-## Running migrations or generate prisma clients
-
-
-
-
 ## Doc api
-
-
-
 
 
 ### POST /games
@@ -106,7 +103,7 @@ npm run dev
 
 * Remove um game da lista, usando o Id
 
-### PUT /
+### PUT /games/:id
 
 * Atualiza o status ou e gametime
 
